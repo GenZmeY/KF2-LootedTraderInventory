@@ -1,0 +1,58 @@
+[img]https://img.shields.io/static/v1?logo=GitHub&labelColor=gray&color=blue&logoColor=white&label=&message=Open Source[/img] [img]https://img.shields.io/github/license/GenZmeY/KF2-LootedTraderInventory[/img] [img]https://img.shields.io/steam/downloads/2864857909[/img] [img]https://img.shields.io/steam/favorites/2864857909[/img] [img]https://img.shields.io/steam/update-date/2864857909[/img] [url=https://steamcommunity.com/sharedfiles/filedetails/changelog/2864857909][img]https://img.shields.io/github/v/tag/GenZmeY/KF2-LootedTraderInventory[/img][/url]
+
+[h1]Features[/h1]
+[list]
+[*]remove items from trader.
+[/list]
+
+[h1]Description[/h1]
+This is a heavily stripped-down version of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2830826239]CTI[/url] that only allows you to remove weapons, not add them.
+[url=https://steamcommunity.com/sharedfiles/filedetails/?id=2830826239]CTI[/url] has no chance of being whitelisted, but this version has a chance because it can't add anything unbalanced to the game - and that's the only reason this version exists.
+If we're lucky with that then server operators will have more tools to fine-tune the server.
+
+[h1]Whitelisted?[/h1]
+No. But I really hope that it will be whitelisted.
+
+[b]⚠️ I submitted whitelist request here:[/b]
+https://forums.tripwireinteractive.com/index.php?threads/whitelisting-mods-and-mutators.120340/
+
+[h1]Usage (single player)[/h1]
+[olist]
+[*]Subscribe to this mutator;
+[*]Start KF2; 
+[*]Open console (`) and input:
+[b]open KF-BioticsLab?Mutator=LTI.LTIMut[/b]
+(replace the map and add the parameters you need)
+[*]<Enter>.
+[/olist]
+[h1]Usage (server)[/h1]
+[b]Note:[/b] [i]If you don't understand what is written here, read the article [url=https://wiki.killingfloor2.com/index.php?title=Dedicated_Server_(Killing_Floor_2)][u]Dedicated Server (KF2 wiki)[/u][/url] before following these instructions.[/i]
+[olist]
+[*]Open your [b]PCServer-KFEngine.ini[/b] / [b]LinuxServer-KFEngine.ini[/b];
+[*]Find the [b][IpDrv.TcpNetDriver][/b] section and make sure that there is a line (add if not):
+[b]DownloadManagers=OnlineSubsystemSteamworks.SteamWorkshopDownload[/b]
+❗️ If there are several [b]DownloadManagers=[/b] then the line above should be the first ❗️
+[*]Add the following string to the [b][OnlineSubsystemSteamworks.KFWorkshopSteamworks][/b] section (create one if it doesn't exist):
+[b]ServerSubscribedWorkshopItems=2864857909[/b]
+[*]Start the server and wait until the mutator is downloading;
+[*]Add mutator to server start parameters: [b]?Mutator=LTI.LTIMut[/b] and restart the server.
+[/olist]
+
+[h1]Setup (KFLTI.ini)[/h1]
+Config will be created at the first start[b]*[/b].
+[list]
+[*]Set [b]bOfficialWeaponsList=True[/b] to have an auto-updated list of all official weapons in the config (for a convenient copy-paste).
+[*]Use [b][LTI.RemoveItems][/b] to remove items from the trader inventory.
+example: [b]Item=KFGame.KFWeapDef_Mac10[/b] will remove MAC10 from sale.
+[/list]
+
+[h1]Troubleshooting[/h1]
+[b](*)[/b] If your config is not created for some reason, create it manually with the following content:
+[b][LTI.LTI]
+Version=0
+[/b]
+
+Then start the server and check the file again - config content should be generated.
+
+[h1]Sources[/h1]
+[url=https://github.com/GenZmeY/KF2-LootedTraderInventory]https://github.com/GenZmeY/KF2-LootedTraderInventory[/url] [b](GNU GPLv3)[/b]
