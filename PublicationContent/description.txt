@@ -45,9 +45,8 @@ So if you are using this mutator for the first time, I highly recommend doing th
 [*]Create (modify) [b]KFLTI.ini[/b] manually. Put the following content there:
 [b][LTI.LTI]
 Version=0[/b]
-[*]Start the game/server to generate the contents of the config
+[*]Start the game/server with LTI to generate the contents of the config
 [*]Close the game/server
-[*]Now you have the correct default config.
 [/olist]
 [b]Right now this is the only way to correctly create the default config.[/b]
 Unfortunately I can't do anything about it because it's a game problem (not mutator). I hope TWI fixes this someday.
