@@ -11,16 +11,16 @@ This is a heavily stripped-down version of [url=https://steamcommunity.com/share
 If we're lucky with that then server operators will have more tools to fine-tune the server.
 
 [h1]Whitelisted?[/h1]
-No. But I really hope that it will be whitelisted.
+[b]No.[/b] But I really hope that it will be whitelisted.
 
 [b]⚠️ I submitted whitelist request here:[/b]
-https://forums.tripwireinteractive.com/index.php?threads/whitelisting-mods-and-mutators.120340/
+https://forums.tripwireinteractive.com/index.php?threads/whitelisting-mods-and-mutators.120340/post-2353665
 
 [h1]Usage (single player)[/h1]
 [olist]
 [*]Subscribe to this mutator;
 [*]Start KF2; 
-[*]Open console (`) and input:
+[*]Open console (~) and input:
 [b]open KF-BioticsLab?Mutator=LTI.LTIMut[/b]
 (replace the map and add the parameters you need)
 [*]<Enter>.
@@ -38,21 +38,26 @@ https://forums.tripwireinteractive.com/index.php?threads/whitelisting-mods-and-m
 [*]Add mutator to server start parameters: [b]?Mutator=LTI.LTIMut[/b] and restart the server.
 [/olist]
 
+[h1]Important setup information[/h1]
+The config should be created on first start, but now the game contains a bug that initializes the config values ​​randomly if they are not explicitly set. Thus, the config may have incorrect values ​​or not be created at all.
+So if you are using this mutator for the first time, I highly recommend doing the following:
+[olist]
+[*]Create (modify) [b]KFLTI.ini[/b] manually. Put the following content there:
+[b][LTI.LTI]
+Version=0[/b]
+[*]Start the game/server to generate the contents of the config
+[*]Close the game/server
+[*]Now you have the correct default config.
+[/olist]
+[b]Right now this is the only way to correctly create the default config.[/b]
+Unfortunately I can't do anything about it because it's a game problem (not mutator). I hope TWI fixes this someday.
+
 [h1]Setup (KFLTI.ini)[/h1]
-Config will be created at the first start[b]*[/b].
 [list]
 [*]Set [b]bOfficialWeaponsList=True[/b] to have an auto-updated list of all official weapons in the config (for a convenient copy-paste).
 [*]Use [b][LTI.RemoveItems][/b] to remove items from the trader inventory.
 example: [b]Item=KFGame.KFWeapDef_Mac10[/b] will remove MAC10 from sale.
 [/list]
-
-[h1]Troubleshooting[/h1]
-[b](*)[/b] If your config is not created for some reason, create it manually with the following content:
-[b][LTI.LTI]
-Version=0
-[/b]
-
-Then start the server and check the file again - config content should be generated.
 
 [h1]Sources[/h1]
 [url=https://github.com/GenZmeY/KF2-LootedTraderInventory]https://github.com/GenZmeY/KF2-LootedTraderInventory[/url] [b](GNU GPLv3)[/b]
