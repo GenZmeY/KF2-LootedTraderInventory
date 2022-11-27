@@ -69,6 +69,8 @@ public static simulated function ModifyTrader(
 	KFGameReplicationInfo KFGRI,
 	Array<class<KFWeaponDefinition> > RemoveItems,
 	bool ReplaceMode,
+	bool RemoveHRG,
+	bool RemoveDLC,
 	E_LogLevel LogLevel)
 {
 	local KFGFxObject_TraderItems TraderItems;
@@ -86,7 +88,9 @@ public static simulated function ModifyTrader(
 		foreach TraderItems.SaleItems(Item)
 		{
 			if (Item.WeaponDef != None
-			&& RemoveItems.Find(Item.WeaponDef) == INDEX_NONE)
+			&& RemoveItems.Find(Item.WeaponDef) == INDEX_NONE
+			&& (!RemoveHRG || (RemoveHRG && InStr(Item.WeaponDef, "_HRG", true) == INDEX_NONE))
+			&& (!RemoveDLC || (RemoveDLC && Item.WeaponDef.default.SharedUnlockId == SCU_None)))
 			{
 				WeapDefs.AddItem(Item.WeaponDef);
 			}

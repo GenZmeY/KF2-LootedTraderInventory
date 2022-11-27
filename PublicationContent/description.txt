@@ -56,6 +56,9 @@ Unfortunately I can't do anything about it because it's a game problem (not muta
 [*]Set [b]bOfficialWeaponsList=True[/b] to have an auto-updated list of all official weapons in the config (for a convenient copy-paste).
 [*]Use [b][LTI.RemoveItems][/b] to remove items from the trader inventory.
 example: [b]Item=KFGame.KFWeapDef_Mac10[/b] will remove MAC10 from sale.
+
+[*]Set [b]bHRG=True[/b] to remove HRG items.
+[*]Set [b]bDLC=True[/b] to remove DLC items.
 [/list]
 
 [h1]Sources[/h1]

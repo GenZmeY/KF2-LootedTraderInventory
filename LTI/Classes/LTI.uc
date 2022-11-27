@@ -1,7 +1,7 @@
 class LTI extends Info
 	config(LTI);
 
-const LatestVersion = 1;
+const LatestVersion = 2;
 
 const CfgRemoveItems     = class'RemoveItems';
 const CfgOfficialWeapons = class'OfficialWeapons';
@@ -71,6 +71,8 @@ private function PreInit()
 		case `NO_CONFIG:
 			`Log_Info("Config created");
 			
+		case 1:
+			
 		case MaxInt:
 			`Log_Info("Config updated to version" @ LatestVersion);
 			break;
@@ -139,7 +141,13 @@ private function PostInit()
 		return;
 	}
 	
-	Trader.static.ModifyTrader(KFGRI, RemoveItems, CfgRemoveItems.default.bAll, LogLevel);
+	Trader.static.ModifyTrader(
+		KFGRI,
+		RemoveItems,
+		CfgRemoveItems.default.bAll,
+		CfgRemoveItems.default.bHRG,
+		CfgRemoveItems.default.bDLC,
+		LogLevel);
 	
 	ReadyToSync = true;
 	
@@ -185,7 +193,9 @@ public function bool CreateRepInfo(Controller C)
 		Self,
 		LogLevel,
 		RemoveItems,
-		CfgRemoveItems.default.bAll);
+		CfgRemoveItems.default.bAll,
+		CfgRemoveItems.default.bHRG,
+		CfgRemoveItems.default.bDLC);
 	
 	RepInfos.AddItem(RepInfo);
 	
