@@ -9,7 +9,7 @@ private delegate int ByPrice(class<KFWeaponDefinition> A, class<KFWeaponDefiniti
 public static function KFGFxObject_TraderItems GetTraderItems(optional KFGameReplicationInfo KFGRI = None, optional E_LogLevel LogLevel = LL_Trace)
 {
 	local String TraderItemsPath;
-	
+
 	if (KFGRI == None)
 	{
 		TraderItemsPath = class'KFGameReplicationInfo'.default.TraderItemsPath;
@@ -18,7 +18,7 @@ public static function KFGFxObject_TraderItems GetTraderItems(optional KFGameRep
 	{
 		TraderItemsPath = KFGRI.TraderItemsPath;
 	}
-	
+
 	return KFGFxObject_TraderItems(DynamicLoadObject(TraderItemsPath, class'KFGFxObject_TraderItems'));
 }
 
@@ -27,9 +27,9 @@ public static function Array<class<KFWeaponDefinition> > GetTraderWeapDefs(optio
 	local Array<class<KFWeaponDefinition> > KFWeapDefs;
 	local KFGFxObject_TraderItems TraderItems;
 	local STraderItem Item;
-	
+
 	TraderItems = GetTraderItems(KFGRI, LogLevel);
-	
+
 	foreach TraderItems.SaleItems(Item)
 	{
 		if (Item.WeaponDef != None)
@@ -37,7 +37,7 @@ public static function Array<class<KFWeaponDefinition> > GetTraderWeapDefs(optio
 			KFWeapDefs.AddItem(Item.WeaponDef);
 		}
 	}
-	
+
 	return KFWeapDefs;
 }
 
@@ -47,9 +47,9 @@ public static function Array<class<KFWeapon> > GetTraderWeapons(optional KFGameR
 	local class<KFWeapon> KFWeapon;
 	local KFGFxObject_TraderItems TraderItems;
 	local STraderItem Item;
-	
+
 	TraderItems = GetTraderItems(KFGRI, LogLevel);
-	
+
 	foreach TraderItems.SaleItems(Item)
 	{
 		if (Item.WeaponDef != None)
@@ -61,7 +61,7 @@ public static function Array<class<KFWeapon> > GetTraderWeapons(optional KFGameR
 			}
 		}
 	}
-	
+
 	return KFWeapons;
 }
 
@@ -78,11 +78,11 @@ public static simulated function ModifyTrader(
 	local class<KFWeaponDefinition> WeapDef;
 	local Array<class<KFWeaponDefinition> > WeapDefs;
 	local int MaxItemID;
-	
+
 	`Log_TraceStatic();
-	
+
 	TraderItems = GetTraderItems(KFGRI, LogLevel);
-	
+
 	if (!ReplaceMode)
 	{
 		foreach TraderItems.SaleItems(Item)
@@ -96,9 +96,9 @@ public static simulated function ModifyTrader(
 			}
 		}
 	}
-	
+
 	WeapDefs.Sort(ByPrice);
-	
+
 	TraderItems.SaleItems.Length = 0;
 	MaxItemID = 0;
 	foreach WeapDefs(WeapDef)
@@ -109,11 +109,11 @@ public static simulated function ModifyTrader(
 	}
 
 	TraderItems.SetItemsInfo(TraderItems.SaleItems);
-	
+
 	KFGRI.TraderItems = TraderItems;
 }
 
 defaultproperties
 {
-	
+
 }
