@@ -26,6 +26,7 @@ public event PreBeginPlay()
 	if (LTI == None)
 	{
 		`Log_Base("FATAL: Can't Spawn 'LTI'");
+		WorldInfo.Game.RemoveMutator(Self);
 		SafeDestroy();
 	}
 }
