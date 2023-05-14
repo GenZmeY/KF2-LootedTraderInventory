@@ -21,73 +21,73 @@ var private bool ReadyToSync;
 public simulated function bool SafeDestroy()
 {
 	`Log_Trace();
-	
+
 	return (bPendingDelete || bDeleteMe || Destroy());
 }
 
 public event PreBeginPlay()
 {
 	`Log_Trace();
-	
+
 	`Log_Debug("PreBeginPlay readyToSync" @ ReadyToSync);
-	
+
 	if (WorldInfo.NetMode == NM_Client)
 	{
 		`Log_Fatal("NetMode == NM_Client, Destroy...");
 		SafeDestroy();
 		return;
 	}
-	
+
 	Super.PreBeginPlay();
-	
+
 	PreInit();
 }
 
 public event PostBeginPlay()
 {
 	`Log_Trace();
-	
+
 	if (bPendingDelete || bDeleteMe) return;
-	
+
 	Super.PostBeginPlay();
-	
+
 	PostInit();
 }
 
 private function PreInit()
 {
 	`Log_Trace();
-	
+
 	if (Version == `NO_CONFIG)
 	{
 		LogLevel = LL_Info;
 		SaveConfig();
 	}
-	
+
 	CfgRemoveItems.static.InitConfig(Version, LatestVersion);
-	
+
 	switch (Version)
 	{
 		case `NO_CONFIG:
 			`Log_Info("Config created");
-			
+
 		case 1:
-			
+
 		case MaxInt:
 			`Log_Info("Config updated to version" @ LatestVersion);
 			break;
-			
+
 		case LatestVersion:
 			`Log_Info("Config is up-to-date");
 			break;
-			
+
 		default:
 			`Log_Warn("The config version is higher than the current version (are you using an old mutator?)");
 			`Log_Warn("Config version is" @ Version @ "but current version is" @ LatestVersion);
 			`Log_Warn("The config version will be changed to" @ LatestVersion);
 			break;
 	}
-	
+
 	CfgOfficialWeapons.static.Update(bOfficialWeaponsList);
 
 	if (LatestVersion != Version)
@@ -103,22 +103,22 @@ private function PreInit()
 		SaveConfig();
 	}
 	`Log_Base("LogLevel:" @ LogLevel);
-	
+
 	RemoveItems = CfgRemoveItems.static.Load(LogLevel);
 }
 
 private function PostInit()
 {
 	local LTI_RepInfo RepInfo;
-	
+
 	`Log_Trace();
-	
+
 	if (WorldInfo == None || WorldInfo.Game == None)
 	{
 		SetTimer(1.0f, false, nameof(PostInit));
 		return;
 	}
-	
+
 	KFGI = KFGameInfo(WorldInfo.Game);
 	if (KFGI == None)
 	{
@@ -126,13 +126,13 @@ private function PostInit()
 		SafeDestroy();
 		return;
 	}
-	
+
 	if (KFGI.GameReplicationInfo == None)
 	{
 		SetTimer(1.0f, false, nameof(PostInit));
 		return;
 	}
-	
+
 	KFGRI = KFGameReplicationInfo(KFGI.GameReplicationInfo);
 	if (KFGRI == None)
 	{
@@ -140,7 +140,7 @@ private function PostInit()
 		SafeDestroy();
 		return;
 	}
-	
+
 	Trader.static.ModifyTrader(
 		KFGRI,
 		RemoveItems,
@@ -148,9 +148,9 @@ private function PostInit()
 		CfgRemoveItems.default.bHRG,
 		CfgRemoveItems.default.bDLC,
 		LogLevel);
-	
+
 	ReadyToSync = true;
-	
+
 	foreach RepInfos(RepInfo)
 	{
 		if (RepInfo.PendingSync)
@@ -180,15 +180,15 @@ public function NotifyLogout(Controller C)
 public function bool CreateRepInfo(Controller C)
 {
 	local LTI_RepInfo RepInfo;
-	
+
 	`Log_Trace();
-	
+
 	if (C == None) return false;
-	
+
 	RepInfo = Spawn(class'LTI_RepInfo', C);
-	
+
 	if (RepInfo == None) return false;
-	
+
 	RepInfo.PrepareSync(
 		Self,
 		LogLevel,
@@ -196,9 +196,9 @@ public function bool CreateRepInfo(Controller C)
 		CfgRemoveItems.default.bAll,
 		CfgRemoveItems.default.bHRG,
 		CfgRemoveItems.default.bDLC);
-	
+
 	RepInfos.AddItem(RepInfo);
-	
+
 	if (ReadyToSync)
 	{
 		RepInfo.ServerSync();
@@ -207,18 +207,18 @@ public function bool CreateRepInfo(Controller C)
 	{
 		RepInfo.PendingSync = true;
 	}
-	
+
 	return true;
 }
 
 public function bool DestroyRepInfo(Controller C)
 {
 	local LTI_RepInfo RepInfo;
-	
+
 	`Log_Trace();
-	
+
 	if (C == None) return false;
-	
+
 	foreach RepInfos(RepInfo)
 	{
 		if (RepInfo.Owner == C)
@@ -228,7 +228,7 @@ public function bool DestroyRepInfo(Controller C)
 			return true;
 		}
 	}
-	
+
 	return false;
 }
 
