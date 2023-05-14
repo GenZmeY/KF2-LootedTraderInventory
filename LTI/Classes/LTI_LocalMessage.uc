@@ -37,28 +37,28 @@ public static function String GetLocalizedString(
 	optional String String3)
 {
 	`Log_TraceStatic();
-	
+
 	switch (LMT)
 	{
 		case LTI_SyncItems:
 			return (default.SyncItems != "" ? default.SyncItems : default.SyncItemsDefault);
-			
+
 		case LTI_SyncFinished:
 			return (default.SyncFinished != "" ? default.SyncFinished : default.SyncFinishedDefault);
-		
+
 		case LTI_WaitingGRI:
 			return (default.WaitingGRI != "" ? default.WaitingGRI : default.WaitingGRIDefault);
-		
+
 		case LTI_IncompatibleGRI:
 			return (default.IncompatibleGRI != "" ? default.IncompatibleGRI : default.IncompatibleGRIDefault);
-		
+
 		case LTI_Disconnect:
 			return (default.Disconnect != "" ? default.Disconnect : default.DisconnectDefault);
-		
+
 		case LTI_SecondsShort:
 			return (default.SecondsShort != "" ? default.SecondsShort : default.SecondsShortDefault);
 	}
-	
+
 	return "";
 }
 
