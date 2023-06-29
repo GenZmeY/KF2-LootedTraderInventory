@@ -25,6 +25,7 @@ var private String NotificationRightText;
 var private int    NotificationPercent;
 
 var private int    WaitingGRI;
+var private int    WaitingGRILimit;
 
 replication
 {
@@ -72,6 +73,39 @@ private simulated function KFPlayerController GetKFPC()
 	}
 
 	return KFPC;
+}
+
+public reliable client function WriteToChatLocalized(
+	E_LTI_LocalMessageType LMT,
+	optional String HexColor,
+	optional String String1,
+	optional String String2,
+	optional String String3)
+{
+	`Log_Trace();
+
+	WriteToChat(LocalMessage.static.GetLocalizedString(LogLevel, LMT, String1, String2, String3), HexColor);
+}
+
+public reliable client function WriteToChat(String Message, optional String HexColor)
+{
+	local KFGFxHudWrapper HUD;
+
+	`Log_Trace();
+
+	if (GetKFPC() == None) return;
+
+	if (KFPC.MyGFxManager.PartyWidget != None && KFPC.MyGFxManager.PartyWidget.PartyChatWidget != None)
+	{
+		KFPC.MyGFxManager.PartyWidget.PartyChatWidget.SetVisible(true);
+		KFPC.MyGFxManager.PartyWidget.PartyChatWidget.AddChatMessage(Message, HexColor);
+	}
+
+	HUD = KFGFxHudWrapper(KFPC.myHUD);
+	if (HUD != None && HUD.HUDMovie != None && HUD.HUDMovie.HudChatBox != None)
+	{
+		HUD.HUDMovie.HudChatBox.AddChatMessage(Message, HexColor);
+	}
 }
 
 private simulated function SetPartyInGameWidget()
@@ -189,47 +223,44 @@ private simulated reliable client function ClientSyncFinished()
 
 	`Log_Trace();
 
-	NotificationLeftText  = "";
-	NotificationRightText = "";
-	NotificationPercent   = 0;
-
-	if (WorldInfo.GRI == None)
+	if (WorldInfo.GRI == None && WaitingGRI++ < WaitingGRILimit)
 	{
-		`Log_Debug("ClientSyncFinished: Waiting GRI");
+		`Log_Debug("ClientSyncFinished: Waiting GRI" @ WaitingGRI);
 		NotificationHeaderText = LocalMessage.static.GetLocalizedString(LogLevel, LTI_WaitingGRI);
-		NotificationLeftText   = String(++WaitingGRI) $ LocalMessage.static.GetLocalizedString(LogLevel, LTI_SecondsShort);
+		NotificationLeftText   = String(WaitingGRI) $ LocalMessage.static.GetLocalizedString(LogLevel, LTI_SecondsShort);
 		NotificationRightText  = "";
+		NotificationPercent    = 0;
 		SetTimer(1.0f, false, nameof(ClientSyncFinished));
 		return;
 	}
 
-	KFGRI = KFGameReplicationInfo(WorldInfo.GRI);
-	if (KFGRI == None)
-	{
-		`Log_Fatal("Incompatible Replication info:" @ String(WorldInfo.GRI));
-		ClearTimer(nameof(KeepNotification));
-		UpdateNotification(
-			LocalMessage.static.GetLocalizedString(LogLevel, LTI_IncompatibleGRI) @ String(WorldInfo.GRI),
-			LocalMessage.static.GetLocalizedString(LogLevel, LTI_Disconnect), "", 0);
-		Cleanup();
-		ConsoleCommand("Disconnect");
-		SafeDestroy();
-		return;
-	}
-
-	NotificationHeaderText = LocalMessage.static.GetLocalizedString(LogLevel, LTI_SyncFinished);
+	NotificationHeaderText = "";
 	NotificationLeftText   = "";
 	NotificationRightText  = "";
 	NotificationPercent    = 0;
 
-	Trader.static.ModifyTrader(KFGRI, RemoveItems, ReplaceMode, RemoveHRG, RemoveDLC, LogLevel);
-	`Log_Debug("ClientSyncFinished: Trader.static.ModifyTrader");
+	KFGRI = KFGameReplicationInfo(WorldInfo.GRI);
+	if (KFGRI != None)
+	{
+		`Log_Debug("ClientSyncFinished: Trader.static.ModifyTrader");
+		Trader.static.ModifyTrader(KFGRI, RemoveItems, ReplaceMode, RemoveHRG, RemoveDLC, LogLevel);
+	}
+	else
+	{
+		`Log_Error("Incompatible Replication info:" @ String(WorldInfo.GRI));
+		WriteToChatLocalized(
+			LTI_IncompatibleGRI,
+			class'KFLocalMessage'.default.InteractionColor,
+			WorldInfo.GRI == None ? "None" : String(WorldInfo.GRI.class));
+		WriteToChatLocalized(
+			LTI_IncompatibleGRIWarning,
+			class'KFLocalMessage'.default.InteractionColor);
+	}
 
 	ClearTimer(nameof(KeepNotification));
 	ShowReadyButton();
 
 	Cleanup();
-
 	SafeDestroy();
 }
 
@@ -279,4 +310,5 @@ defaultproperties
 
 	NotificationPercent    = 0
 	WaitingGRI             = 0
+	WaitingGRILimit        = 15
 }
