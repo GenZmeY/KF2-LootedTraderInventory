@@ -75,9 +75,7 @@ public static simulated function ModifyTrader(
 {
 	local KFGFxObject_TraderItems TraderItems;
 	local STraderItem Item;
-	local class<KFWeaponDefinition> WeapDef;
 	local Array<class<KFWeaponDefinition> > WeapDefs;
-	local int MaxItemID;
 
 	`Log_TraceStatic();
 
@@ -99,13 +97,33 @@ public static simulated function ModifyTrader(
 
 	WeapDefs.Sort(ByPrice);
 
+	OverwriteTraderItems(KFGRI, WeapDefs, LogLevel);
+}
+
+public static simulated function OverwriteTraderItems(
+	KFGameReplicationInfo KFGRI,
+	const out Array<class<KFWeaponDefinition> > WeapDefs,
+	E_LogLevel LogLevel)
+{
+	local KFGFxObject_TraderItems TraderItems;
+	local STraderItem Item;
+	local class<KFWeaponDefinition> WeapDef;
+	local int MaxItemID;
+
+	`Log_TraceStatic();
+
+	TraderItems = GetTraderItems(KFGRI, LogLevel);
+
 	TraderItems.SaleItems.Length = 0;
 	MaxItemID = 0;
+
+	`Log_Debug("Trader Items:");
 	foreach WeapDefs(WeapDef)
 	{
 		Item.WeaponDef = WeapDef;
-		Item.ItemID = ++MaxItemID;
+		Item.ItemID = MaxItemID++;
 		TraderItems.SaleItems.AddItem(Item);
+		`Log_Debug("[" $ MaxItemID $ "]" @ String(WeapDef));
 	}
 
 	TraderItems.SetItemsInfo(TraderItems.SaleItems);

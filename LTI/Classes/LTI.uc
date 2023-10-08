@@ -14,6 +14,7 @@ var private config bool       bOfficialWeaponsList;
 var private KFGameInfo KFGI;
 var private KFGameReplicationInfo KFGRI;
 
+var private Array<class<KFWeaponDefinition> > WeapDefs;
 var private Array<class<KFWeaponDefinition> > RemoveItems;
 var private Array<LTI_RepInfo> RepInfos;
 var private bool ReadyToSync;
@@ -149,13 +150,15 @@ private function PostInit()
 		CfgRemoveItems.default.bDLC,
 		LogLevel);
 
+	WeapDefs = Trader.static.GetTraderWeapDefs(KFGRI, LogLevel);
+
 	ReadyToSync = true;
 
 	foreach RepInfos(RepInfo)
 	{
 		if (RepInfo.PendingSync)
 		{
-			RepInfo.ServerSync();
+			RepInfo.Replicate(WeapDefs);
 		}
 	}
 }
@@ -189,19 +192,13 @@ public function bool CreateRepInfo(Controller C)
 
 	if (RepInfo == None) return false;
 
-	RepInfo.PrepareSync(
-		Self,
-		LogLevel,
-		RemoveItems,
-		CfgRemoveItems.default.bAll,
-		CfgRemoveItems.default.bHRG,
-		CfgRemoveItems.default.bDLC);
+	RepInfo.PrepareSync(Self, LogLevel);
 
 	RepInfos.AddItem(RepInfo);
 
 	if (ReadyToSync)
 	{
-		RepInfo.ServerSync();
+		RepInfo.Replicate(WeapDefs);
 	}
 	else
 	{

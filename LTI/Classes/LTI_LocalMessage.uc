@@ -16,13 +16,17 @@ var private localized String IncompatibleGRIWarning;
 var const             String SecondsShortDefault;
 var private localized String SecondsShort;
 
+var const             String PleaseWaitDefault;
+var private localized String PleaseWait;
+
 enum E_LTI_LocalMessageType
 {
 	LTI_SyncItems,
 	LTI_WaitingGRI,
 	LTI_IncompatibleGRI,
 	LTI_IncompatibleGRIWarning,
-	LTI_SecondsShort
+	LTI_SecondsShort,
+	LTI_PleaseWait
 };
 
 public static function String GetLocalizedString(
@@ -50,6 +54,9 @@ public static function String GetLocalizedString(
 
 		case LTI_SecondsShort:
 			return (default.SecondsShort != "" ? default.SecondsShort : default.SecondsShortDefault);
+
+		case LTI_PleaseWait:
+			return (default.PleaseWait != "" ? default.PleaseWait : default.PleaseWaitDefault);
 	}
 
 	return "";
@@ -62,4 +69,5 @@ defaultproperties
 	IncompatibleGRIDefault        = "Incompatible GRI:"
 	IncompatibleGRIWarningDefault = "You can enter the game, but the trader may not work correctly.";
 	SecondsShortDefault           = "s"
+	PleaseWaitDefault             = "Please wait"
 }
