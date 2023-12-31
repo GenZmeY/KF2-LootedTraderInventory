@@ -150,8 +150,15 @@ private simulated function Finished()
 	}
 	else
 	{
-		`Log_Error("Incompatible Replication info:" @ String(GRI));
-		NotifyIncompatibleGRI();
+		`Log_Error("Incompatible Game Replication info:" @ String(GRI));
+		if (GRI == None)
+		{
+			NotifyNoneGRI();
+		}
+		else
+		{
+			NotifyIncompatibleGRI();
+		}
 	}
 
 	ShowReadyButton();
@@ -308,6 +315,7 @@ private simulated function KeepNotification()
 
 private simulated function ClientCleanup()
 {
+	`Log_Debug("Cleanup");
 	ServerCleanup();
 	SafeDestroy();
 }
@@ -360,6 +368,16 @@ private simulated function NotifyIncompatibleGRI()
 		String(GRI.class));
 	WriteToChatLocalized(
 		LTI_IncompatibleGRIWarning,
+		class'KFLocalMessage'.default.InteractionColor);
+}
+
+private simulated function NotifyNoneGRI()
+{
+	WriteToChatLocalized(
+		LTI_NoneGRI,
+		class'KFLocalMessage'.default.InteractionColor);
+	WriteToChatLocalized(
+		LTI_NoneGRIWarning,
 		class'KFLocalMessage'.default.InteractionColor);
 }
 
