@@ -21,7 +21,7 @@ https://forums.tripwireinteractive.com/index.php?threads/whitelisting-mods-and-m
 [*]Subscribe to this mutator;
 [*]Start KF2;
 [*]Open console (~) and input:
-[b]open KF-BioticsLab?Mutator=LTI.LTIMut[/b]
+[b]open KF-BioticsLab?Mutator=LTI.Mut[/b]
 (replace the map and add the parameters you need)
 [*]<Enter>.
 [/olist]
@@ -35,7 +35,7 @@ https://forums.tripwireinteractive.com/index.php?threads/whitelisting-mods-and-m
 [*]Add the following string to the [b][OnlineSubsystemSteamworks.KFWorkshopSteamworks][/b] section (create one if it doesn't exist):
 [b]ServerSubscribedWorkshopItems=2864857909[/b]
 [*]Start the server and wait until the mutator is downloading;
-[*]Add mutator to server start parameters: [b]?Mutator=LTI.LTIMut[/b] and restart the server.
+[*]Add mutator to server start parameters: [b]?Mutator=LTI.Mut[/b] and restart the server.
 [/olist]
 
 [h1]Important setup information[/h1]
