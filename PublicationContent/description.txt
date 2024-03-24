@@ -1,4 +1,4 @@
-[img]https://img.shields.io/static/v1?logo=GitHub&labelColor=gray&color=blue&logoColor=white&label=&message=Open Source[/img] [img]https://img.shields.io/github/license/GenZmeY/KF2-LootedTraderInventory[/img] [img]https://img.shields.io/steam/downloads/2864857909[/img] [img]https://img.shields.io/steam/favorites/2864857909[/img] [img]https://img.shields.io/steam/update-date/2864857909[/img] [url=https://steamcommunity.com/sharedfiles/filedetails/changelog/2864857909][img]https://img.shields.io/github/v/tag/GenZmeY/KF2-LootedTraderInventory[/img][/url]
+[img]https://img.shields.io/static/v1?logo=GitHub&labelColor=gray&color=blue&logoColor=white&label=&message=Open Source[/img] [img]https://img.shields.io/github/license/GenZmeY/KF2-LootedTraderInventory[/img] [img]https://img.shields.io/steam/favorites/2864857909[/img] [img]https://img.shields.io/steam/update-date/2864857909[/img] [url=https://steamcommunity.com/sharedfiles/filedetails/changelog/2864857909][img]https://img.shields.io/github/v/tag/GenZmeY/KF2-LootedTraderInventory[/img][/url]
 
 [h1]Features[/h1]
 [list]
@@ -53,7 +53,7 @@ Unfortunately I can't do anything about it because it's a game problem (not muta
 
 [h1]Setup (KFLTI.ini)[/h1]
 [list]
-[*]Set [b]bOfficialWeaponsList=True[/b] to have an auto-updated list of all official weapons in the config (for a convenient copy-paste).
+[*]Set [b]bOfficialWeaponsList=True[/b] to have an auto-updated list of all official weapons in the config (for a convenient copy-paste) or leave it [b]False[/b] if you want a clean config without unnecessary things.
 [*]Use [b][LTI.RemoveItems][/b] to remove items from the trader inventory.
 example: [b]Item=KFGame.KFWeapDef_Mac10[/b] will remove MAC10 from sale.
 [*]Set [b]bHRG=True[/b] to remove HRG items.
