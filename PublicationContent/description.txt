@@ -19,11 +19,17 @@ https://forums.tripwireinteractive.com/index.php?threads/whitelisting-mods-and-m
 [h1]Usage (single player)[/h1]
 [olist]
 [*]Subscribe to this mutator;
+[*]Create a file [b](*)[/b]: [b]C:\Users\<username>\Documents\My Games\KillingFloor2\KFGame\Config\KFLTI.ini[/b]
+with the following content:
+[b][LTI.LTI]
+Version=0[/b]
 [*]Start KF2;
-[*]Open console (~) and input:
+[*]Open console (~) and start any map with LTI (this will generate the default KFLTI.ini content):
 [b]open KF-BioticsLab?Mutator=LTI.Mut[/b]
-(replace the map and add the parameters you need)
-[*]<Enter>.
+[*]Close the game and configure LTI as you need (see the [b]Setup (KFLTI.ini)[/b] section below);
+[*]Start KF2, open the console, start the game:
+[b]open KF-BioticsLab?Mutator=LTI.Mut[/b]
+(replace the map and add the parameters you need).
 [/olist]
 [h1]Usage (server)[/h1]
 [b]Note:[/b] [i]If you don't understand what is written here, read the article [url=https://wiki.killingfloor2.com/index.php?title=Dedicated_Server_(Killing_Floor_2)][u]Dedicated Server (KF2 wiki)[/u][/url] before following these instructions.[/i]
@@ -34,21 +40,20 @@ https://forums.tripwireinteractive.com/index.php?threads/whitelisting-mods-and-m
 ❗️ If there are several [b]DownloadManagers=[/b] then the line above should be the first ❗️
 [*]Add the following string to the [b][OnlineSubsystemSteamworks.KFWorkshopSteamworks][/b] section (create one if it doesn't exist):
 [b]ServerSubscribedWorkshopItems=2864857909[/b]
-[*]Start the server and wait until the mutator is downloading;
-[*]Add mutator to server start parameters: [b]?Mutator=LTI.Mut[/b] and restart the server.
-[/olist]
-
-[h1]Important setup information[/h1]
-The config should be created on first start, but now the game contains a bug that initializes the config values ​​randomly if they are not explicitly set. Thus, the config may have incorrect values ​​or not be created at all.
-So if you are using this mutator for the first time, I highly recommend doing the following:
-[olist]
-[*]Create (modify) [b]KFLTI.ini[/b] manually. Put the following content there:
+[*]Start the server and wait while the mutator is downloading;
+[*]When the download is complete, close the server;
+[*]Create a file [b](*)[/b]: [b]<kf2-server>\KFGame\Config\KFLTI.ini[/b]
+with the following content:
 [b][LTI.LTI]
 Version=0[/b]
-[*]Start the game/server with LTI to generate the contents of the config
-[*]Close the game/server
+[*]Add mutator to server start parameters: [b]?Mutator=LTI.Mut[/b] and start the server (this will generate the default KFLTI.ini content);
+[*]Close the server and configure LTI as you need (see the [b]Setup (KFLTI.ini)[/b] section below);
+[*]Start the server (with [b]?Mutator=LTI.Mut[/b]) again.
 [/olist]
-[b]Right now this is the only way to correctly create the default config.[/b]
+
+[h1][b](*)[/b] Buggy config variables initialization[/h1]
+LTI, like many other mutators, initializes the config by relying on the unreal script feature which uses default values for each data type that is not explicitly specified. For the int type (which is used to store the config version) this is zero - detecting zero allows to understand that the mutator is being used for the first time (which means it's need to generate a config). But now the game contains a bug that initializes the config values ​​randomly if they are not explicitly set. Thus, the config may have incorrect values ​​or not be created at all. This is why I recommend explicitly set [b]Version=0[/b] in the config for the first time.
+
 Unfortunately I can't do anything about it because it's a game problem (not mutator). I hope TWI fixes this someday.
 
 [h1]Setup (KFLTI.ini)[/h1]
