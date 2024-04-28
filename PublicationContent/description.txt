@@ -60,5 +60,8 @@ example: [b]Item=KFGame.KFWeapDef_Mac10[/b] will remove MAC10 from sale.
 [*]Set [b]bDLC=True[/b] to remove DLC items.
 [/list]
 
+[h1]Translators:[/h1]
+[url=https://steamcommunity.com/profiles/76561199126205919]cheungfatzong[/url] - Traditional [CHT] and Simplified [CHN] Chinese.
+
 [h1]Sources[/h1]
 [url=https://github.com/GenZmeY/KF2-LootedTraderInventory]https://github.com/GenZmeY/KF2-LootedTraderInventory[/url] [b](GNU GPLv3)[/b]
