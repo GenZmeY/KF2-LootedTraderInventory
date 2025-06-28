@@ -70,12 +70,13 @@ example: [b]Item=KFGame.KFWeapDef_Mac10[/b] will remove MAC10 from sale.
 [/list]
 
 [h1]🌍 Credits[/h1]
-[list]
-[*]The cat on the cover is Meawbin (original character by [url=https://x.com/horrormove]Cotton Valent[/url]).
-[/list]
 [b]Translators:[/b]
 [list]
 [*][url=https://steamcommunity.com/profiles/76561199126205919]cheungfatzong[/url] - Traditional [CHT] and Simplified [CHN] Chinese.
+[/list]
+[b]Other credits:[/b]
+[list]
+[*]The cat on the cover is Meawbin (original character by [url=https://x.com/horrormove]Cotton Valent[/url]).
 [/list]
 
 [h1]☑️ Status: Completed[/h1]
@@ -83,4 +84,4 @@ example: [b]Item=KFGame.KFWeapDef_Mac10[/b] will remove MAC10 from sale.
 ⛔️ Development has stopped: I no longer have the time or motivation to maintain this mod. No further updates or bug fixes are planned.
 
 [h1]📜 Sources[/h1]
-https://github.com/GenZmeY/KF2-LootedTraderInventory [b](GNU GPLv3)[/b]
+https://github.com/GenZmeY/KF2-LootedTraderInventory [b](GPL-3.0-or-later)[/b]
